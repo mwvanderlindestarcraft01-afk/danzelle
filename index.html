@@ -1,0 +1,322 @@
+```html
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vir my liefste Danzélle ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e7, #fff0f5, #ffc2dc);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.94);
+            width: 90%;
+            max-width: 440px;
+            padding: 35px 24px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(255, 80, 140, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .big-heart {
+            font-size: 65px;
+            animation: heartbeat 1.3s infinite;
+        }
+
+        h1 {
+            color: #ff4f91;
+            font-size: 27px;
+            line-height: 1.4;
+            margin: 14px 0;
+        }
+
+        p {
+            color: #a34d72;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .buttons {
+            position: relative;
+            width: 100%;
+            height: 110px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            border-radius: 30px;
+            padding: 14px 23px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            touch-action: manipulation;
+        }
+
+        #yesBtn {
+            position: absolute;
+            left: 5%;
+            top: 15px;
+            background: #ff5b9a;
+            color: white;
+        }
+
+        #noBtn {
+            position: absolute;
+            left: 58%;
+            top: 15px;
+            background: #eeeeee;
+            color: #555555;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #success h1 {
+            font-size: 32px;
+        }
+
+        #success p {
+            font-size: 18px;
+        }
+
+        .floating-heart {
+            position: fixed;
+            bottom: -60px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-115vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 28px 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            #yesBtn,
+            #noBtn {
+                font-size: 15px;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- DIE VRAAG -->
+    <div class="card" id="question">
+
+        <div class="big-heart">❤️</div>
+
+        <h1>My ou liefste Danzélle, is jy ooit nog lief vir my?</h1>
+
+        <p>
+            Kies mooi, my liefie... 🥹💕
+        </p>
+
+        <div class="buttons" id="buttonArea">
+
+            <button id="yesBtn" onclick="sayYes()">
+                YES! ❤️
+            </button>
+
+            <button id="noBtn" type="button">
+                NO 🙈
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- WAT SY SIEN AS SY YES KLIK -->
+    <div class="card hidden" id="success">
+
+        <div class="big-heart">🥹❤️</div>
+
+        <h1>Ek is baie lief vir jou! 💖</h1>
+
+        <p>
+            Ek is baie lief vir jou, al stink jou poep.
+            Baie dankie vir die koffie en kos wat jy vir my
+            maak deur die dag, ek waardeer dit.
+            I love you!
+        </p>
+
+        <div style="font-size: 35px; margin-top: 20px;">
+            💖 💕 💗 💓 💞
+        </div>
+
+        <p>
+            Vir altyd jou MW. ❤️
+        </p>
+
+    </div>
+
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const buttonArea = document.getElementById("buttonArea");
+
+        // Laat die NO-knoppie na 'n nuwe plek spring.
+        function moveNoButton() {
+            const maxX = Math.max(
+                0,
+                buttonArea.clientWidth - noBtn.offsetWidth
+            );
+
+            const maxY = Math.max(
+                0,
+                buttonArea.clientHeight - noBtn.offsetHeight
+            );
+
+            let newX;
+            let newY;
+            let attempts = 0;
+
+            const oldX = parseFloat(noBtn.style.left) ||
+                noBtn.offsetLeft;
+
+            const oldY = parseFloat(noBtn.style.top) ||
+                noBtn.offsetTop;
+
+            // Probeer om die knoppie ver van sy vorige plek
+            // af te plaas.
+            do {
+                newX = Math.random() * maxX;
+                newY = Math.random() * maxY;
+                attempts++;
+            } while (
+                attempts < 20 &&
+                Math.abs(newX - oldX) < 100 &&
+                Math.abs(newY - oldY) < 35
+            );
+
+            noBtn.style.left = newX + "px";
+            noBtn.style.top = newY + "px";
+        }
+
+        // Spring sodra die muis oor die NO-knoppie beweeg.
+        noBtn.addEventListener("pointerenter", function() {
+            moveNoButton();
+        });
+
+        // Kyk ook of die muis naby die knoppie kom.
+        // Dit maak dit moeiliker om die knoppie te vang.
+        buttonArea.addEventListener("pointermove", function(event) {
+            const rect = noBtn.getBoundingClientRect();
+
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const distanceX = event.clientX - centerX;
+            const distanceY = event.clientY - centerY;
+
+            const distance = Math.sqrt(
+                distanceX * distanceX +
+                distanceY * distanceY
+            );
+
+            if (distance < 85) {
+                moveNoButton();
+            }
+        });
+
+        // Op 'n selfoon spring die knoppie wanneer sy
+        // probeer om dit te druk.
+        noBtn.addEventListener("pointerdown", function(event) {
+            event.preventDefault();
+            moveNoButton();
+        });
+
+        // Wys die liefdesboodskap en laat hartjies verskyn.
+        function sayYes() {
+            document.getElementById("question").classList.add("hidden");
+            document.getElementById("success").classList.remove("hidden");
+
+            for (let i = 0; i < 80; i++) {
+                setTimeout(createHeart, i * 70);
+            }
+        }
+
+        // Skep 'n drywende hartjie.
+        function createHeart() {
+            const heart = document.createElement("div");
+
+            const hearts = [
+                "❤️", "💖", "💕", "💗",
+                "💘", "💓", "💞", "🥰"
+            ];
+
+            heart.className = "floating-heart";
+
+            heart.textContent = hearts[
+                Math.floor(Math.random() * hearts.length)
+            ];
+
+            heart.style.left = Math.random() * 100 + "vw";
+
+            heart.style.fontSize =
+                (20 + Math.random() * 25) + "px";
+
+            heart.style.animationDuration =
+                (3 + Math.random() * 4) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(function() {
+                heart.remove();
+            }, 7500);
+        }
+    </script>
+
+</body>
+</html>
+```
